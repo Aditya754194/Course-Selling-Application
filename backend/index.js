@@ -5,12 +5,14 @@ import courseRoute from "./routes/courseRoute.js";
 import fileUpload from "express-fileupload";
 import {v2 as cloudinary} from 'cloudinary'; 
 import userRoute from "./routes/userRoute.js";
-
+import cookieParser from "cookie-parser";
+import adminRoute from "./routes/adminRoute.js";
 const app = express();
 dotenv.config();
 
 //middleware for json data
 app.use(express.json());
+app.use(cookieParser());
 app.use(fileUpload({
   useTempFiles: true,
   tempFileDir :'/tmp/'
@@ -29,6 +31,7 @@ try {
 //defining routes 
 app.use("/api/v1/course", courseRoute);
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/admin", adminRoute);
 
 //cloudinary configuration
 cloudinary.config({ 

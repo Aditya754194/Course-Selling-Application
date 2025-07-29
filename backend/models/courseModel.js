@@ -1,4 +1,4 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema({
     title:{
@@ -14,8 +14,14 @@ const courseSchema = new mongoose.Schema({
         require:true,
     },
     image:{
-        type:String,
-        require:true,
+        public_id:{
+            type:String,
+            required:true
+        },
+        url:{
+            type:String,
+            required: true
+        }
     }
 })
 

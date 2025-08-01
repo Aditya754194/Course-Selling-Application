@@ -24,7 +24,7 @@ export const signup = async (req, res) => {
     }
 
     try {
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ email,firstName,lastName });
         if (existingUser) {
             return res.status(400).json({ errors: "User already exists" });
         }
@@ -83,17 +83,20 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-    try {
-        if (!req.cookies.jwt) {
-            return res.status(401).json({ errors: "Kindly login first" });
-        }
-        res.clearCookie("jwt");
-        res.status(200).json({ message: "Logged out successfully" })
-    } catch (error) {
-        res.status(500).json({ errors: "Logout Unsuccessfull" })
-        console.log("Error in logout", error);
-    }
+  try {
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: true, // set to true if using HTTPS
+      sameSite: "None", // or "Lax" depending on what you used when setting it
+    });
+
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log("Error in logout", error);
+    res.status(500).json({ errors: "Logout Unsuccessful" });
+  }
 };
+
 
 export const purchses = async (req, res) => {
     const userId = req.userId;

@@ -122,6 +122,7 @@ const Home = () => {
           <div className='space-x-4 mt-4'>
             <Link to={"/courses"} className='bg-green-500 px-6 py-2 text-white rounded font-semibold hover:bg-violet-300 duration-300 hover:text-black'>Explore Courses</Link>
             <Link to={"https://www.youtube.com/@freecodecamp/playlists"} className='bg-orange-500 px-6 py-2 text-white rounded font-semibold hover:bg-violet-300 duration-300 hover:text-black'>Courses Videos</Link>
+            <Link to={"/admin/login"} className='bg-blue-600 px-6 py-2 text-white rounded font-semibold hover:bg-violet-300 duration-300 hover:text-black'>Admin Login</Link>
           </div>
         </section>
         <section>

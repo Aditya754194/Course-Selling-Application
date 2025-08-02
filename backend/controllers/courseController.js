@@ -48,35 +48,39 @@ export const createCourse = async (req, res) => {
 };
 
 export const updateCourse = async (req, res) => {
-    const adminId = req.adminId;
-    
-    const { courseId } = req.params;
-    const { title, description, price, image } = req.body;
-    try {
-        const courseSearch = await Course.findById(courseId);
-        if (!courseSearch) {
-            return res.status(404).json({ errors: "Course not found" });
-        }
-        const course = await Course.findOneAndUpdate(
-            {
-                _id: courseId,
-                creatorId: adminId,
-            },
-            {
-                title,
-                description,
-                price,
-                image: {
-                    public_id: image?.public_id,
-                    url: image?.url,
-                },
-            }
-        )
-        res.status(201).json({ message: "course updated successfully", course });
-    } catch (error) {
-        res.status(501).json({ errors: "Error updating course" })
-        console.log("error in course updating", error);
+  const adminId = req.adminId;
+  const { courseId } = req.params;
+  const { title, description, price, image } = req.body;
+  try {
+    const courseSearch = await Course.findById(courseId);
+    if (!courseSearch) {
+      return res.status(404).json({ errors: "Course not found" });
     }
+    const course = await Course.findOneAndUpdate(
+      {
+        _id: courseId,
+        creatorId: adminId,
+      },
+      {
+        title,
+        description,
+        price,
+        image: {
+          public_id: image?.public_id,
+          url: image?.url,
+        },
+      }
+    );
+    if (!course) {
+      return res
+        .status(404)
+        .json({ errors: "can't update, created by other admin" });
+    }
+    res.status(201).json({ message: "Course updated successfully", course });
+  } catch (error) {
+    res.status(500).json({ errors: "Error in course updating" });
+    console.log("Error in course updating ", error);
+  }
 };
 
 export const deleteCourse = async (req, res) => {
@@ -114,13 +118,17 @@ export const courseDetails = async (req, res) => {
         if (!course) {
             res.status(404).json({ errors: "Course details not found" });
         }
-        res.status(201).json(course);
+        res.status(201).json({course});
     } catch (error) {
         res.status(500).json({ errors: "course details not found" });
         console.log("course details not found", error);
     }
 };
 
+import Stripe from "stripe";
+import config from "../config/config.js"
+const stripe = new Stripe(config.STRIPE_SECRET_KEY);
+console.log(config.STRIPE_SECRET_KEY);
 export const buyCourses = async (req, res) => {
     const { userId } = req;
     const { courseId } = req.params;
@@ -133,10 +141,18 @@ export const buyCourses = async (req, res) => {
         if (existingPurchase) {
             return res.status(400).json({ errors: "User has already purchased this course" });
         }
+        //stripe payment code goes here
+        const amount = course.price;
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: amount,
+            currency: "usd",
+            payment_method_types:["card"],
+        });
 
-        const newPurchase = new Purchase({ userId, courseId });
-        await newPurchase.save();
-        res.status(201).json({ message: "Course purchased successfully", newPurchase });
+        res.status(201).json({ message: "Course purchased successfully", 
+            course,
+            clientSecret: paymentIntent.client_secret ,
+        });
     } catch (error) {
         res.status(500).json({ errors: "Error in buying course" })
         console.log("error in buying course", error);

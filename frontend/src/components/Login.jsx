@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BACKEND_URL } from "../utils/utils";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4001/api/v1/user/login", {
+      const response = await axios.post(`${BACKEND_URL}/user/login`, {
         email,
         password,
       }, {
@@ -25,7 +26,7 @@ const Login = () => {
       });
       console.log("Login successfull");
       toast.success(response.data.message || "Login successful!");
-      localStorage.setItem("user",JSON.stringify(response.data.token));
+      localStorage.setItem("user",JSON.stringify(response.data));
       navigate("/");
     } catch (error) {
       SetErrorMessage(error.response.data.errors || "Login failed!!!");

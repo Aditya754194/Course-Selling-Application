@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { BACKEND_URL } from "../utils/utils";
 
 const Home = () => {
 
@@ -16,7 +17,8 @@ const Home = () => {
   const [isLoggedIn,setIsLoggedIn] = useState(false);
   
   useEffect(()=>{
-    const token = localStorage.getItem("user");
+    const token = localStorage.getItem("user"); 
+    console.log(token)
     if(token){
       setIsLoggedIn(true);
     }else{
@@ -26,7 +28,7 @@ const Home = () => {
 
   const handleLogout = async() => {
     try {
-      const response = axios.post("http://localhost:4001/api/v1/user/logout",{
+      const response = axios.post(`${BACKEND_URL}/user/logout`,{
         withCredentials: true,
       })
       toast.success((await response).data.message);
@@ -41,7 +43,7 @@ const Home = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:4001/api/v1/course/courses",
+        const response = await axios.get(`${BACKEND_URL}/course/courses`,
           {
             withCredentials:true
           }

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
 
-function userMiddleware(req, res, next){
+const userMiddleware=(req, res, next)=>{
     const authHeader = req.headers.authorization;
     
     if(!authHeader || !authHeader.startsWith("Bearer ")){
@@ -18,4 +18,6 @@ function userMiddleware(req, res, next){
     }
 }
 
+
 export default userMiddleware;
+

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BACKEND_URL } from "../utils/utils";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4001/api/v1/user/signup", {
+      const response = await axios.post(`${BACKEND_URL}/user/signup`, {
         firstName,
         lastName,
         email,

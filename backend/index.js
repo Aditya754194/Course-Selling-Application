@@ -7,6 +7,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import userRoute from "./routes/userRoute.js";
 import cookieParser from "cookie-parser";
 import adminRoute from "./routes/adminRoute.js";
+import orderRoute from "./routes/orderRoute.js";
 import cors from "cors";
 
 const app = express();
@@ -41,6 +42,7 @@ try {
 app.use("/api/v1/course", courseRoute);
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/admin", adminRoute);
+app.use("/api/v1/order", orderRoute);
 
 //cloudinary configuration
 cloudinary.config({

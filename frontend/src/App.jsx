@@ -13,6 +13,7 @@ import Dashboard from './admin/Dashboard'
 import CourseCreate from './admin/CourseCreate'
 import UpdateCourse from './admin/UpdateCourse'
 import OurCourses from './admin/OurCourses'
+import { Navigate } from 'react-router-dom';
 
 
 const App = () => {

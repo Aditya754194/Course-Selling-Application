@@ -51,6 +51,7 @@ cloudinary.config({
   api_secret: process.env.api_secret
 });
 
+app.use("/api/status", (req,res)=> res.send("Server is live"));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

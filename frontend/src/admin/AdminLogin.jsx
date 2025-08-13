@@ -15,7 +15,6 @@ function AdminLogin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ password });
     try {
       const response = await axios.post(
         `${BACKEND_URL}/admin/login`,
@@ -55,13 +54,13 @@ function AdminLogin() {
           <div className="flex items-center space-x-4">
             <Link
               to={"/admin/signup"}
-              className="bg-transparent border border-gray-500 py-2 px-4 rounded-md"
+              className="bg-transparent border border-gray-500  bg-violet-500 hover:bg-violet-400 hover:text-black py-2 px-4 rounded-md"
             >
               Signup
             </Link>
             <Link
               to={"/courses"}
-              className="bg-orange-500 py-2 px-4 rounded-md"
+              className=" bg-violet-500 hover:bg-violet-400 hover:text-black py-2 px-4 rounded-md"
             >
               Join now
             </Link>
@@ -118,7 +117,7 @@ function AdminLogin() {
             )}
             <button
               type="submit"
-              className="w-full bg-orange-500 hover:bg-blue-600 text-white py-3 px-6 rounded-md transition"
+              className="w-full bg-violet-500 hover:bg-violet-400 hover:text-black text-white py-3 px-6 rounded-md transition"
             >
               Login
             </button>

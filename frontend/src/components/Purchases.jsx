@@ -19,7 +19,6 @@ function Purchases() {
     const user = JSON.parse(localStorage.getItem("user"));
     const token = user?.token; // using optional chaining to avoid app crashing
 
-    console.log("purchases: ", purchases);
 
     // Token handling
     useEffect(() => {
@@ -33,6 +32,7 @@ function Purchases() {
 
     if (!token) {
         navigate("/login");
+        toast.info("Login first");
     }
 
     // Fetch purchases
@@ -56,13 +56,14 @@ function Purchases() {
     // Logout
     const handleLogout = async () => {
         try {
-            const response = await axios.get(`${BACKEND_URL}/user/logout`, {
+            const response = await axios.post(`${BACKEND_URL}/user/logout`, {
                 withCredentials: true,
             });
             toast.success(response.data.message);
             localStorage.removeItem("user");
-            navigate("/login");
             setIsLoggedIn(false);
+            localStorage.setItem("isUserloggedIn", false);
+            navigate("/");
         } catch (error) {
             console.log("Error in logging out ", error);
             toast.error(error.response.data.errors || "Error in logging out");

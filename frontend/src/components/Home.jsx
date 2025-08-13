@@ -15,7 +15,7 @@ const Home = () => {
 
   const [courses,setCourses] = useState([]);
   const [isLoggedIn,setIsLoggedIn] = useState(false);
-  
+  const isUserloggedIn = JSON.parse(localStorage.getItem("isUserLoggedIn"));
   useEffect(()=>{
     const token = localStorage.getItem("user"); 
     console.log(token)
@@ -34,6 +34,7 @@ const Home = () => {
       toast.success((await response).data.message);
       localStorage.removeItem("user");
       setIsLoggedIn(false);
+      localStorage.setItem("isUserloggedIn", false);
     } catch (error) {
       console.log("Error in logging out",error)
       toast.error(error.response.data.errors || "Error in logging out")
@@ -102,7 +103,7 @@ const Home = () => {
             <img src={logo} alt="" className='w-8 h-8 sm:w-10 sm:h-10 rounded-full' />
             <h1 className='text-xl sm:text-2xl text-violet-400 font-bold'>EduWeb</h1>
           </div>
-          {isLoggedIn ? (
+          {isUserloggedIn ? (
             <div>
               <button 
                 onClick={handleLogout} 

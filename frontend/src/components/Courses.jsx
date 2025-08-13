@@ -38,6 +38,7 @@ const Courses = () => {
             toast.success((await response).data.message);
             localStorage.removeItem("user");
             setIsLoggedIn(false);
+            localStorage.setItem("isUserloggedIn", false);
         } catch (error) {
             console.log("Error in logging out", error)
             toast.error(error.response.data.errors || "Error in logging out")

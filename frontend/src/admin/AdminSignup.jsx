@@ -58,13 +58,13 @@ function AdminSignup() {
           <div className="flex items-center space-x-4">
             <Link
               to={"/admin/login"}
-              className="bg-transparent border border-gray-500 py-2 px-4 rounded-md"
+              className="bg-transparent border border-gray-500  bg-violet-500 hover:bg-violet-400 hover:text-black py-2 px-4 rounded-md"
             >
               Login
             </Link>
             <Link
               to={"/courses"}
-              className="bg-orange-500 py-2 px-4 rounded-md"
+              className=" bg-violet-500 hover:bg-violet-400 hover:text-black py-2 px-4 rounded-md"
             >
               Join now
             </Link>
@@ -72,11 +72,11 @@ function AdminSignup() {
         </header>
 
         {/* AdminSignup Form */}
-        <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-[500px] mt-20">
-          <h2 className="text-2xl font-bold mb-4 text-center">
+        <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-[450px] mt-10">
+          <h2 className="text-2xl font-bold text-center">
             Welcome to <span className="text-violet-500">EduWeb</span>
           </h2>
-          <p className="text-center text-gray-400 mb-6">
+          <p className="text-center text-gray-400 mb-2">
             Just signup to mess with dashboard!
           </p>
 
@@ -149,7 +149,7 @@ function AdminSignup() {
             )}
             <button
               type="submit"
-              className="w-full bg-orange-500 hover:bg-blue-600 text-white py-3 px-6 rounded-md transition"
+              className="w-full  bg-violet-500 hover:bg-violet-400 hover:text-black text-white py-3 px-6 rounded-md transition"
             >
               Signup
             </button>

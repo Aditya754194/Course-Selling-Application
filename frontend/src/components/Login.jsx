@@ -27,6 +27,7 @@ const Login = () => {
       console.log("Login successfull");
       toast.success(response.data.message || "Login successful!");
       localStorage.setItem("user",JSON.stringify(response.data));
+      localStorage.setItem("isUserloggedIn", true);
       navigate("/");
     } catch (error) {
       SetErrorMessage(error.response.data.errors || "Login failed!!!");
